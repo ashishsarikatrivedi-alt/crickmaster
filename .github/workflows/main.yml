@@ -1,34 +1,8 @@
-name: Update Cricket News
-on:
-  schedule:
-    - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch:   # Manual button
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
+- name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # Updated version
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
           pip install google-genai feedparser requests
-
-      - name: Run Script
-        env:
-          GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
-        run: python script.py
-
-      - name: Commit and Push changes
-        run: |
-          git config --global user.name 'CricketBot'
-          git config --global user.email 'bot@cricketpro.com'
-          git add index.html
-          git commit -m "Auto-update news" || echo "No changes"
-          git push
