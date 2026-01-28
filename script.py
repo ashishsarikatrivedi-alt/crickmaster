@@ -3,8 +3,7 @@ from google import genai
 import feedparser
 import sys
 
-# 1. Setup the Gemini Client
-# It will use your GEMINI_KEY from GitHub Secrets
+# 1. Setup the new Gemini Client
 client = genai.Client(api_key=os.getenv("GEMINI_KEY"))
 
 def update_site():
@@ -17,13 +16,13 @@ def update_site():
             print("No news entries found.")
             return
         
-        new_title = feed.entries[0].title
-        print(f"New Headline Found: {new_title}")
+        new_headline = feed.entries[0].title
+        print(f"New Headline: {new_headline}")
         
-        # 3. Use the latest 2026 model: gemini-3-flash-preview
+        # 3. Use the current stable 2.0 model
         response = client.models.generate_content(
-            model='gemini-3-flash-preview',
-            contents=f"Write a 100-word news summary for this headline: {new_title}. Focus on IPL fans."
+            model='gemini-2.0-flash',
+            contents=f"Summarize this cricket news in 100 punchy words for IPL fans: {new_headline}"
         )
         ai_summary = response.text
 
@@ -31,19 +30,19 @@ def update_site():
         with open("index.html", "r", encoding="utf-8") as f:
             html = f.read()
 
-        # Placeholders from your design
+        # Placeholders MUST match your HTML exactly
         title_tag = "Can India Retain the Border-Gavaskar Trophy?"
         desc_tag = "Our automated analysis indicates a significant shift..."
 
         if title_tag in html:
-            html = html.replace(title_tag, new_title)
+            html = html.replace(title_tag, new_headline)
             html = html.replace(desc_tag, ai_summary)
             
             with open("index.html", "w", encoding="utf-8") as f:
                 f.write(html)
-            print("✅ Successfully updated index.html with AI news!")
+            print("✅ Success: index.html updated!")
         else:
-            print("❌ Error: Could not find placeholder text in HTML.")
+            print("❌ Error: Placeholder text not found in index.html. Check your HTML!")
 
     except Exception as e:
         print(f"❌ Error during execution: {e}")
