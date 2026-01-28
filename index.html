@@ -3,167 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrickMaster | Live Cricket Scores & AI Analysis</title>
+    <title>CrickMaster | Live IND vs NZ 4th T20I</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #003366; /* Deep India Blue */
-            --accent: #ffde00;  /* Gold/Yellow */
-            --bg: #f0f2f5;
-            --text: #333;
-        }
-
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background: var(--bg); color: var(--text); }
-
-        /* 1. LIVE TICKER */
+        :root { --primary: #003366; --accent: #ffde00; --bg: #f0f2f5; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
+        
+        /* TICKER */
         .ticker-wrap { width: 100%; overflow: hidden; background: #222; padding: 12px 0; border-bottom: 3px solid var(--accent); }
         .ticker { display: flex; animation: ticker 25s linear infinite; }
-        .ticker__item { white-space: nowrap; padding: 0 50px; color: var(--accent); font-weight: bold; font-size: 14px; text-transform: uppercase; }
+        .ticker__item { white-space: nowrap; padding: 0 50px; color: var(--accent); font-weight: bold; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* 2. NAVBAR */
-        nav { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: 1px; }
-        .logo span { color: var(--accent); }
-        .nav-links { list-style: none; display: flex; gap: 20px; }
-        .nav-links a { color: white; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
-
-        /* 3. MAIN CONTENT LAYOUT */
+        /* LAYOUT */
+        nav { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
         .container { display: grid; grid-template-columns: 1fr 320px; gap: 20px; padding: 20px 5%; }
-
-        /* 4. MATCH CARDS */
-        .match-cards-container { display: flex; gap: 15px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; }
-        .card { min-width: 280px; background: white; padding: 15px; border-radius: 12px; border-top: 5px solid var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .card.live { border-top-color: #d0021b; }
-        .status { font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
-        .status.live { background: #ffebeb; color: #d0021b; }
-        .score-row { display: flex; justify-content: space-between; align-items: center; margin: 5px 0; font-weight: bold; }
-
-        /* 5. AI NEWS HERO */
-        .hero-section { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 20px; position: relative; overflow: hidden; }
-        .hero-section::before { content: "AI INSIGHT"; position: absolute; top: 10px; right: 10px; background: var(--accent); font-size: 10px; padding: 4px 8px; font-weight: bold; border-radius: 4px; }
-        .hero-title { font-size: 28px; color: var(--primary); margin-top: 0; }
-        .hero-desc { line-height: 1.6; color: #555; font-size: 16px; }
-
-        /* 6. POINTS TABLE */
-        .sidebar-box { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); position: sticky; top: 80px; }
-        .sidebar-box h3 { margin-top: 0; font-size: 18px; border-bottom: 2px solid var(--bg); padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { text-align: left; color: #888; padding: 8px 0; }
-        td { padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
-
-        @media (max-width: 900px) {
-            .container { grid-template-columns: 1fr; }
-            .sidebar-box { position: static; }
-        }
+        
+        /* CARDS */
+        .card { background: white; padding: 20px; border-radius: 12px; border-top: 5px solid #d0021b; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .live-tag { color: #d0021b; font-weight: bold; font-size: 12px; }
+        .score-box { display: flex; justify-content: space-between; font-size: 20px; font-weight: 900; margin: 15px 0; }
+        
+        /* POINTS TABLE */
+        .sidebar { background: white; border-radius: 12px; padding: 20px; height: fit-content; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { text-align: left; padding: 10px 5px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item">🔴 LIVE: IND vs NZ 4th T20I - NZ 215/7 (20) | India Chase Begins!</div>
-            <div class="ticker__item">🔥 Abhishek Sharma hits 52 (14) - Fastest T20I Fifty for India!</div>
-            <div class="ticker__item">🏏 ICC Rankings: India retains #1 T20 Spot</div>
-            <div class="ticker__item">🗓️ Coming Up: Australia vs South Africa 2nd Test</div>
+            <div class="ticker__item">🔴 INNINGS BREAK: NZ 215/7 (20) | Target for India: 216</div>
+            <div class="ticker__item">⭐ Tim Seifert: 50 (25) - Fastest Kiwi fifty vs India!</div>
+            <div class="ticker__item">🔥 Daryl Mitchell: 62* (38) powers NZ to huge total</div>
+            <div class="ticker__item">🎯 Series Status: India lead 3-0</div>
         </div>
     </div>
 
     <nav>
-        <div class="logo">CRICK<span>MASTER</span></div>
-        <ul class="nav-links">
-            <li><a href="#">LIVE SCORES</a></li>
-            <li><a href="#">IND vs NZ</a></li>
-            <li><a href="#">SERIES</a></li>
-            <li><a href="#">VIDEOS</a></li>
-        </ul>
-        <div class="nav-icons">
-            <i class="fas fa-search"></i>
-        </div>
+        <div style="font-size: 24px; font-weight: 900;">CRICK<span style="color:var(--accent)">MASTER</span></div>
+        <div style="font-size: 14px; font-weight: 600;">VISAKHAPATNAM MATCH CENTER</div>
     </nav>
 
     <div class="container">
         <main>
-            <div class="match-cards-container">
-                <div class="card live">
-                    <div class="status live">● LIVE</div>
-                    <div class="score-row"><span>IND</span> <span>0/0 (0.0)</span></div>
-                    <div class="score-row"><span>NZ</span> <span>215/7 (20)</span></div>
-                    <p style="font-size: 12px; color: #666; margin: 10px 0 0;">India needs 216 to win</p>
-                </div>
-                <div class="card">
-                    <div class="status" style="background: #eef; color: #003366;">UPCOMING</div>
-                    <div class="score-row"><span>AUS</span> <span>-</span></div>
-                    <div class="score-row"><span>RSA</span> <span>-</span></div>
-                    <p style="font-size: 12px; color: #666; margin: 10px 0 0;">Tomorrow, 5:00 AM</p>
-                </div>
-                <div class="card">
-                    <div class="status" style="background: #eee; color: #444;">RESULT</div>
-                    <div class="score-row"><span>WI</span> <span>164/5</span></div>
-                    <div class="score-row"><span>ENG</span> <span>162/9</span></div>
-                    <p style="font-size: 12px; color: #4CAF50; margin: 10px 0 0;">WI won by 5 wickets</p>
-                </div>
+            <div class="card">
+                <span class="live-tag">● INNINGS BREAK</span>
+                <div class="score-box"><span>🇳🇿 NZ</span> <span>215/7 (20.0)</span></div>
+                <div class="score-box" style="color:#888;"><span>🇮🇳 IND</span> <span id="ind-score">0/0 (0.0)</span></div>
+                <p id="match-comment" style="color: #444; font-weight: 600;">India needs 216 runs to win the 4th T20I!</p>
             </div>
 
-            <div class="hero-section">
-                <h1 class="hero-title">Can India Retain the Border-Gavaskar Trophy?</h1>
-                <p class="hero-desc">Our automated analysis indicates a significant shift... (Waiting for AI update)</p>
-                <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
-                <div style="display: flex; gap: 15px; font-size: 13px; color: #888;">
-                    <span><i class="far fa-clock"></i> Updated Just Now</span>
-                    <span><i class="far fa-user"></i> By Gemini AI</span>
-                </div>
+            <div class="card" style="border-top-color: var(--primary);">
+                <h3>AI Match Analysis</h3>
+                <p id="ai-news">Suryakumar Yadav won the toss and chose to bowl. New Zealand's Tim Seifert and Devon Conway gave them a flier, but Jasprit Bumrah (3/17) and Kuldeep Yadav kept India in the hunt. Daryl Mitchell's late blitz took NZ over 200.</p>
             </div>
         </main>
 
         <aside>
-            <div class="sidebar-box">
-                <h3>T20 Series Standings</h3>
+            <div class="sidebar">
+                <h3>Series Table</h3>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>TEAM</th>
-                            <th>M</th>
-                            <th>W</th>
-                            <th>PTS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>IND</b></td>
-                            <td>3</td>
-                            <td>3</td>
-                            <td><b>6</b></td>
-                        </tr>
-                        <tr>
-                            <td>NZ</td>
-                            <td>3</td>
-                            <td>0</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
+                    <tr><th>Team</th><th>W</th><th>L</th><th>Pts</th></tr>
+                    <tr><td><b>India</b></td><td>3</td><td>0</td><td><b>6</b></td></tr>
+                    <tr><td>NZ</td><td>0</td><td>3</td><td>0</td></tr>
                 </table>
-                <p style="font-size: 11px; color: #999; margin-top: 15px;">*Series decided (IND leads 3-0)</p>
+                <p style="font-size: 12px; color: #999; margin-top: 10px;">India has already won the series.</p>
             </div>
         </aside>
     </div>
 
     <script>
-        // Let's make the "Search" and "Live Scores" work
-        document.querySelector('.fa-search').onclick = () => alert("Searching cricket archives...");
-        
-        // Simple brain to simulate the live chase
-        let balls = 0;
+        // Real-Time Chase Simulation starting in 2 minutes
         let runs = 0;
-        setInterval(() => {
-            if(balls < 120) {
-                balls++;
-                let over = Math.floor(balls/6) + "." + (balls%6);
-                runs += Math.floor(Math.random() * 3); // Simulating 1s and 2s
-                document.querySelectorAll('.score-row')[0].children[1].innerText = runs + "/0 (" + over + ")";
-            }
-        }, 10000); // Updates every 10 seconds
+        let wickets = 0;
+        let balls = 0;
+        
+        function startChase() {
+            setInterval(() => {
+                if (balls < 120 && wickets < 10) {
+                    balls++;
+                    let currentOver = Math.floor(balls/6) + "." + (balls%6);
+                    runs += Math.floor(Math.random() * 4); // Simulating the chase
+                    if (Math.random() > 0.96) wickets++; // Random wickets
+                    
+                    document.getElementById('ind-score').innerText = `${runs}/${wickets} (${currentOver})`;
+                    document.getElementById('match-comment').innerText = `India needs ${216 - runs} runs from ${120 - balls} balls.`;
+                }
+            }, 8000); // Updates every 8 seconds
+        }
+        
+        // Start the chase simulation after a brief delay
+        setTimeout(startChase, 5000);
     </script>
 </body>
 </html>
