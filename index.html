@@ -3,123 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrickMaster Pro | Global Live Scores & AI News</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>CrickMaster AI | Expert Previews & Predictions</title>
     <style>
-        :root { --nav-bg: #002b5b; --sub-nav: #001e3c; --accent: #ffde00; --live: #d0021b; --bg: #f0f2f5; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
-        body { background: var(--bg); }
+        :root { --main: #1a237e; --accent: #ffd600; --text: #2c3e50; --bg: #fdfdfd; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Georgia', serif; }
+        body { background: var(--bg); color: var(--text); line-height: 1.8; }
 
-        /* HEADER & NAVIGATION */
-        header { background: var(--nav-bg); color: white; padding: 12px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 26px; font-weight: 900; }
-        .logo span { color: var(--accent); }
-        .nav-menu { display: flex; list-style: none; gap: 20px; }
-        .nav-menu a { color: #fff; text-decoration: none; font-size: 14px; font-weight: bold; text-transform: uppercase; }
+        /* HEADER */
+        header { background: white; padding: 20px 5%; border-bottom: 4px solid var(--main); display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 28px; font-weight: 900; color: var(--main); font-family: 'Arial', sans-serif; }
+        .logo span { background: var(--accent); padding: 2px 8px; border-radius: 4px; }
+        nav a { margin-left: 20px; text-decoration: none; color: var(--text); font-weight: bold; font-family: 'Arial', sans-serif; font-size: 14px; text-transform: uppercase; }
 
-        /* LIVE MATCH STRIP */
-        .match-strip { background: var(--sub-nav); overflow: hidden; padding: 10px 0; border-bottom: 3px solid var(--accent); }
-        .ticker { display: flex; animation: scroll 35s linear infinite; white-space: nowrap; }
-        .match-item { padding: 0 30px; color: var(--accent); font-weight: bold; font-size: 13px; border-right: 1px solid #333; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* HERO SECTION */
+        .hero { padding: 60px 5%; background: #f4f4f9; text-align: center; border-bottom: 1px solid #eee; }
+        .hero h1 { font-size: 48px; color: var(--main); margin-bottom: 20px; max-width: 800px; margin-inline: auto; }
+        .hero p { font-size: 18px; color: #666; font-style: italic; }
 
-        /* MAIN LAYOUT */
-        .main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 25px; padding: 25px 5%; }
+        /* BLOG GRID */
+        .container { display: grid; grid-template-columns: 1fr 320px; gap: 40px; padding: 40px 5%; max-width: 1200px; margin: auto; }
+        .post-card { margin-bottom: 50px; border-bottom: 1px solid #eee; padding-bottom: 30px; }
+        .post-tag { color: #d32f2f; font-weight: bold; font-size: 12px; text-transform: uppercase; font-family: 'Arial'; }
+        .post-card h2 { font-size: 32px; margin: 10px 0; color: var(--main); cursor: pointer; }
+        .post-card h2:hover { text-decoration: underline; }
+        .post-meta { font-size: 13px; color: #999; margin-bottom: 15px; font-family: 'Arial'; }
+        .post-excerpt { font-size: 18px; color: #444; margin-bottom: 20px; }
+        .read-more { font-weight: bold; color: var(--main); text-decoration: none; border-bottom: 2px solid var(--accent); }
 
-        /* MATCH CENTER CARDS */
-        .section-header { font-size: 20px; font-weight: 900; margin-bottom: 15px; border-left: 5px solid var(--live); padding-left: 12px; }
-        .match-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
-        .card:hover { transform: translateY(-5px); }
-        .team-row { display: flex; justify-content: space-between; font-weight: bold; margin: 8px 0; font-size: 17px; }
-        .m-status { color: var(--live); font-size: 11px; font-weight: 800; margin-bottom: 10px; }
-
-        /* NEWS HERO */
-        .news-hero { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
-        .news-img { height: 350px; background: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1000&q=80') center/cover; }
-        .news-content { padding: 25px; }
-        .news-content h1 { font-size: 30px; color: var(--nav-bg); margin-bottom: 15px; }
-
+        /* SIDEBAR / AD SPACE */
+        .sidebar-box { background: white; padding: 25px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 30px; }
+        .ad-placeholder { background: #f9f9f9; height: 250px; display: flex; align-items: center; justify-content: center; border: 1px dashed #ccc; color: #aaa; font-size: 12px; }
+        
         /* FOOTER */
-        footer { background: var(--sub-nav); color: #888; padding: 40px 5%; margin-top: 50px; text-align: center; }
-        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; color: white; list-style: none; font-size: 14px; }
+        footer { background: var(--main); color: white; padding: 40px 5%; text-align: center; font-family: 'Arial'; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="nav-container">
-            <div class="logo">CRICK<span>MASTER</span></div>
-            <ul class="nav-menu">
-                <li><a href="#">Matches</a></li>
-                <li><a href="#">Series</a></li>
-                <li><a href="#">Teams</a></li>
-                <li><a href="#">Videos</a></li>
-            </ul>
-            <div class="user-icon"><i class="fas fa-user-circle fa-lg"></i></div>
-        </div>
+        <div class="logo">CRICK<span>MASTER</span> AI</div>
+        <nav>
+            <a href="#">Previews</a>
+            <a href="#">Predictions</a>
+            <a href="#">Post-Match</a>
+            <a href="#">About</a>
+        </nav>
     </header>
 
-    <div class="match-strip">
-        <div class="ticker" id="ticker-data">
-            <span class="match-item">🔴 LIVE: IND vs NZ 4th T20I - NZ 215/7 (20)</span>
-            <span class="match-item">🏏 UPCOMING: AUS vs SA 2nd Test - Sydney</span>
-            <span class="match-item">🔥 BBL: Scorchers vs Heat - Match Starts in 2h</span>
-            <span class="match-item">⭐ IPL 2026: Auction Dates Announced for Dec 15</span>
-        </div>
-    </div>
+    <section class="hero">
+        <p>Expert Analysis • AI-Powered Insights • Match Predictions</p>
+        <h1>Decoding the Gentlemen's Game with Artificial Intelligence</h1>
+    </section>
 
-    <div class="main-grid">
+    <div class="container">
         <main>
-            <h2 class="section-header">FEATURED MATCHES</h2>
-            <div class="match-cards" id="match-cards-container">
-                <div class="card">
-                    <div class="m-status">● LIVE • 4th T20I</div>
-                    <div class="team-row"><span>🇮🇳 IND</span> <span>162/8 (17.1)</span></div>
-                    <div class="team-row"><span>🇳🇿 NZ</span> <span>215/7 (20)</span></div>
-                    <p style="font-size: 12px; color: #666; margin-top:10px;">India needs 54 runs in 17 balls</p>
-                </div>
-            </div>
+            <article class="post-card">
+                <span class="post-tag">Match Preview</span>
+                <h2>IPL 2026: Why the Mega Auction Changed Everything for RCB</h2>
+                <div class="post-meta">Published Jan 28, 2026 • By AI Editorial Team</div>
+                <p class="post-excerpt">The recent auction dynamics have shifted the balance of power. We analyze the top 3 tactical signings that could finally end the trophy drought in Bangalore...</p>
+                <a href="#" class="read-more">Continue Reading →</a>
+            </article>
 
-            <div class="news-hero">
-                <div class="news-img"></div>
-                <div class="news-content">
-                    <span style="color:var(--live); font-weight:bold; font-size:12px;">AI EDITORIAL</span>
-                    <h1 id="hero-title">Cricket 2026: The Year of the Speedster?</h1>
-                    <p id="hero-desc">With the T20 World Cup approaching, we analyze how pace bowlers are dominating the powerplays...</p>
-                </div>
-            </div>
+            <article class="post-card">
+                <span class="post-tag">Prediction</span>
+                <h2>IND vs NZ 5th T20I: Pitch Report and Winning Odds</h2>
+                <div class="post-meta">Published Jan 28, 2026 • By AI Editorial Team</div>
+                <p class="post-excerpt">With the series standing at 3-1, the final clash in Mumbai promises a flat deck. Our AI model predicts a high-scoring encounter with a 62% win probability for the hosts...</p>
+                <a href="#" class="read-more">Continue Reading →</a>
+            </article>
         </main>
 
         <aside>
-            <div style="background:white; padding:20px; border-radius:12px;">
-                <h3 style="margin-bottom:15px; border-bottom:2px solid var(--accent);">ICC RANKINGS</h3>
-                <table style="width:100%; border-collapse: collapse; font-size: 14px;">
-                    <tr style="border-bottom: 1px solid #eee;"><td style="padding:10px 0;">1. India</td><td align="right">268</td></tr>
-                    <tr style="border-bottom: 1px solid #eee;"><td style="padding:10px 0;">2. England</td><td align="right">259</td></tr>
-                    <tr style="border-bottom: 1px solid #eee;"><td style="padding:10px 0;">3. Australia</td><td align="right">255</td></tr>
-                </table>
+            <div class="sidebar-box">
+                <h4 style="margin-bottom:10px; font-family: 'Arial';">AdSense Space</h4>
+                <div class="ad-placeholder">Your Ad Will Appear Here</div>
+            </div>
+            <div class="sidebar-box">
+                <h4 style="margin-bottom:10px; font-family: 'Arial';">Join 50K+ Readers</h4>
+                <p style="font-size: 14px; color: #666;">Get daily match predictions directly in your inbox.</p>
+                <input type="email" placeholder="Email Address" style="width:100%; padding:10px; margin-top:10px; border:1px solid #ddd;">
+                <button style="width:100%; padding:10px; background:var(--main); color:white; border:none; margin-top:10px; cursor:pointer; font-weight:bold;">SUBSCRIBE</button>
             </div>
         </aside>
     </div>
 
     <footer>
-        <ul class="footer-links">
-            <li>About</li><li>Contact</li><li>Privacy</li><li>Terms</li>
-        </ul>
-        <p>© 2026 CrickMaster Pro - The AI Cricket Network</p>
+        <p>© 2026 CrickMaster AI. All rights reserved.</p>
+        <p style="margin-top:10px; color: #888; font-size: 12px;">Disclaimer: Predictions are for informational purposes only.</p>
     </footer>
 
-    <script>
-        // In a real pro site, you fetch data from an API here.
-        // For now, this script simulates the "Live" feeling every 5 seconds.
-        async function fetchGlobalScores() {
-            // Replace this with your API call later:
-            // const res = await fetch('https://api.cricapi.com/v1/currentMatches?apikey=YOUR_KEY');
-            console.log("Fetching global cricket data...");
-        }
-        setInterval(fetchGlobalScores, 5000);
-    </script>
 </body>
 </html>
