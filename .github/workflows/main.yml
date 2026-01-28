@@ -1,11 +1,11 @@
 name: Update Cricket News
 on:
   schedule:
-    - cron: '0 * * * *' # Runs automatically every hour
-  workflow_dispatch:   # Allows you to click "Run workflow" manually
+    - cron: '0 * * * *' # Every hour
+  workflow_dispatch:   # Manual test button
 
 permissions:
-  contents: write      # Crucial: Gives the robot permission to update your index.html
+  contents: write      # Allows the robot to save the new news file
 
 jobs:
   build:
@@ -28,10 +28,10 @@ jobs:
           GEMINI_KEY: ${{ secrets.GEMINI_KEY }}
         run: python script.py
 
-      - name: Commit and Push changes
+      - name: Commit and Push
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add index.html
-          git commit -m "AI Update: Latest Cricket News" || echo "No changes to commit"
+          git commit -m "AI News Update" || echo "No changes"
           git push
