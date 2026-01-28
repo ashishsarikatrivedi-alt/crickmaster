@@ -3,89 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrickMaster | Live IND vs NZ 4th T20I</title>
+    <title>CrickMaster Pro | Global Live Cricket & AI Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #003366; --accent: #ffde00; --bg: #f0f2f5; --live: #d0021b; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
-        .ticker-wrap { background: #222; color: var(--accent); padding: 10px; font-weight: bold; overflow: hidden; }
-        .ticker { display: flex; animation: scroll 20s linear infinite; white-space: nowrap; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        :root { --primary: #002b5b; --secondary: #001e3c; --accent: #ffde00; --live: #d0021b; --text: #333; --light-bg: #f4f7f9; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', sans-serif; background-color: var(--light-bg); color: var(--text); line-height: 1.6; }
+
+        /* HEADER & NAV */
+        header { background: var(--primary); color: white; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
+        .top-nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 28px; font-weight: 900; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; list-style: none; gap: 25px; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* TICKER */
+        .live-ticker { background: var(--secondary); color: var(--accent); overflow: hidden; padding: 8px 0; border-bottom: 2px solid var(--accent); font-size: 13px; }
+        .ticker-move { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
+        .ticker-item { padding: 0 40px; font-weight: bold; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        /* GLOBAL MATCH CENTER */
+        .match-center { padding: 20px 5%; background: #fff; border-bottom: 1px solid #ddd; }
+        .section-title { font-size: 18px; margin-bottom: 15px; border-left: 4px solid var(--live); padding-left: 10px; }
+        .match-grid { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
+        .match-card { min-width: 280px; background: var(--light-bg); border-radius: 8px; padding: 15px; border: 1px solid #eee; transition: 0.3s; cursor: pointer; }
+        .match-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .m-status { font-size: 11px; font-weight: bold; color: var(--live); margin-bottom: 5px; }
+        .m-team { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px; }
         
-        nav { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
-        .container { display: grid; grid-template-columns: 1fr 320px; gap: 20px; padding: 20px 5%; }
-        
-        .card { background: white; padding: 20px; border-radius: 12px; border-left: 8px solid var(--live); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .score-row { display: flex; justify-content: space-between; font-size: 24px; font-weight: 900; margin: 10px 0; }
-        .match-info { color: #555; font-size: 14px; border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px; }
-        
-        .sidebar { background: white; padding: 20px; border-radius: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; }
+        /* CONTENT AREA */
+        .main-container { display: grid; grid-template-columns: 1fr 350px; gap: 30px; padding: 30px 5%; }
+        .news-hero { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .news-img { width: 100%; height: 400px; background: #ddd url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80') center/cover; }
+        .news-text { padding: 30px; }
+        .news-text h1 { color: var(--primary); margin-bottom: 15px; font-size: 32px; }
+
+        /* FOOTER */
+        footer { background: var(--secondary); color: #aaa; padding: 50px 5%; margin-top: 50px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+        .footer-logo { color: white; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
+        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
+        .social-icons i { font-size: 20px; color: white; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <span>🔴 LIVE: India 156/6 (16.0) | Need 60 from 24 balls | Shivam Dube 65 (23) OUT! | Tim Seifert 62 (36) | Arshdeep Singh 2/33</span>
+    <header>
+        <div class="top-nav">
+            <div class="logo">CRICK<span>MASTER</span></div>
+            <ul class="nav-links">
+                <li><a href="#">Matches</a></li>
+                <li><a href="#">Teams</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Rankings</a></li>
+                <li><a href="#">Videos</a></li>
+            </ul>
+            <div class="search-btn"><i class="fas fa-search"></i></div>
+        </div>
+    </header>
+
+    <div class="live-ticker">
+        <div class="ticker-move" id="global-ticker">
+            <span class="ticker-item">● IND vs NZ 4th T20I: India needs 32 from 12 balls</span>
+            <span class="ticker-item">● AUS vs SA: Day 1 Tea - AUS 142/3</span>
+            <span class="ticker-item">● BBL: Sydney Sixers vs Perth Scorchers starts soon</span>
         </div>
     </div>
 
-    <nav>
-        <div style="font-size: 22px; font-weight: 900;">CRICK<span style="color:var(--accent)">MASTER</span></div>
-        <div style="font-size: 12px;">4th T20I • Visakhapatnam</div>
-    </nav>
+    <section class="match-center">
+        <h2 class="section-title">GLOBAL MATCH CENTER</h2>
+        <div class="match-grid" id="match-grid">
+            <div class="match-card">
+                <div class="m-status">● LIVE</div>
+                <div class="m-team"><span>IND</span> <span>184/8</span></div>
+                <div class="m-team"><span>NZ</span> <span>215/7</span></div>
+                <div style="font-size: 11px; color: #777;">IND needs 32 runs in 12 balls</div>
+            </div>
+            <div class="match-card">
+                <div class="m-status" style="color: #002b5b;">UPCOMING</div>
+                <div class="m-team"><span>AUS</span> <span>-</span></div>
+                <div class="m-team"><span>SA</span> <span>-</span></div>
+                <div style="font-size: 11px; color: #777;">Today, 11:30 PM</div>
+            </div>
+            <div class="match-card">
+                <div class="m-status" style="color: #444;">RESULT</div>
+                <div class="m-team"><span>WI</span> <span>164/5</span></div>
+                <div class="m-team"><span>ENG</span> <span>162/9</span></div>
+                <div style="font-size: 11px; color: #4CAF50;">West Indies won by 5 wickets</div>
+            </div>
+        </div>
+    </section>
 
-    <div class="container">
+    <div class="main-container">
         <main>
-            <div class="card">
-                <div style="color: var(--live); font-size: 12px; font-weight: bold;">● LIVE - 2ND INNINGS</div>
-                <div class="score-row"><span>🇳🇿 NZ</span> <span>215/7 (20)</span></div>
-                <div class="score-row"><span>🇮🇳 IND</span> <span id="ind-score">156/6 (16.0)</span></div>
-                
-                <div class="match-info">
-                    <strong>Current Status:</strong> <span id="target-msg">India needs 60 runs in 24 balls</span><br>
-                    <strong>Last Wicket:</strong> Shivam Dube run out 65 (23) - Unlucky!
+            <article class="news-hero">
+                <div class="news-img"></div>
+                <div class="news-text">
+                    <span style="color:var(--live); font-weight:bold; font-size:12px;">AI FEATURED ANALYSIS</span>
+                    <h1 id="ai-news-title">Can India Retain the Border-Gavaskar Trophy?</h1>
+                    <p id="ai-news-content">Automated insights are being fetched from world cricket news...</p>
                 </div>
-            </div>
-
-            <div class="card" style="border-left-color: var(--primary); margin-top: 20px;">
-                <h3>AI Live Commentary</h3>
-                <p id="commentary">A massive heartbreak for India! Shivam Dube was striking it at 282.60 but has been run out in a freak fashion at the non-striker's end. Ravi Bishnoi and Harshit Rana are at the crease. The task is steep: 15 runs per over needed!</p>
-            </div>
+            </article>
         </main>
 
         <aside>
-            <div class="sidebar">
-                <h3>Series (5 Match)</h3>
-                <table>
-                    <tr><th>Team</th><th>W</th><th>Pts</th></tr>
-                    <tr style="background: #eef;"><td>🇮🇳 India</td><td>3</td><td>6</td></tr>
-                    <tr><td>🇳🇿 NZ</td><td>0</td><td>0</td></tr>
+            <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+                <h3 style="margin-bottom:15px; border-bottom:2px solid var(--accent); padding-bottom:5px;">ICC T20 RANKINGS</h3>
+                <table style="width:100%; font-size:14px; border-collapse: collapse;">
+                    <tr><td style="padding:8px 0;">1. India</td><td align="right">268</td></tr>
+                    <tr><td style="padding:8px 0;">2. England</td><td align="right">259</td></tr>
+                    <tr><td style="padding:8px 0;">3. Australia</td><td align="right">255</td></tr>
                 </table>
-                <p style="font-size: 11px; color: #888; margin-top: 10px;">*India has already sealed the series.</p>
             </div>
         </aside>
     </div>
 
-    <script>
-        // Real-Time Update Logic for the final overs
-        let runs = 156;
-        let balls = 96; // 16 overs done
-        let wickets = 6;
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">CRICK<span>MASTER</span></div>
+                <p>The world's most advanced AI-powered cricket portal delivering real-time insights since 2026.</p>
+                <div class="social-icons">
+                    <i class="fab fa-facebook"></i><i class="fab fa-twitter"></i><i class="fab fa-instagram"></i>
+                </div>
+            </div>
+            <div>
+                <h4>Explore</h4>
+                <ul style="list-style:none; margin-top:15px; line-height:2;">
+                    <li>Live Scores</li><li>Archives</li><li>Player Stats</li><li>Fantasy Tips</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Support</h4>
+                <ul style="list-style:none; margin-top:15px; line-height:2;">
+                    <li>Contact Us</li><li>Privacy Policy</li><li>Terms of Service</li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:40px; font-size:12px; border-top:1px solid #333; padding-top:20px;">
+            © 2026 CrickMaster Pro. Powered by Gemini Flash 3.0
+        </div>
+    </footer>
 
-        setInterval(() => {
-            if (balls < 120 && wickets < 10) {
-                balls++;
-                let currentOver = Math.floor(balls/6) + "." + (balls%6);
-                let ballRun = Math.floor(Math.random() * 7); // Random 0, 1, 2, 4, 6
-                runs += ballRun;
-                if (Math.random() > 0.95) wickets++; // Small chance of wicket
-
-                document.getElementById('ind-score').innerText = runs + "/" + wickets + " (" + currentOver + ")";
-                document.getElementById('target-msg').innerText = "India needs " + (216 - runs) + " runs in " + (120 - balls) + " balls";
-            }
-        }, 5000); // Updates every 5 seconds to feel "Live"
-    </script>
 </body>
 </html>
