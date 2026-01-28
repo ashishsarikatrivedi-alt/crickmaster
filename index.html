@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CricMaster AI | Live Scores, News & Stats</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .bg-navy { background-color: #031926; }
+        .text-accent { color: #00d2ff; }
+        .score-card:hover { border-bottom: 4px solid #00d2ff; transition: 0.2s; }
+        .search-bar { background: rgba(255,255,255,0.1); border-radius: 20px; }
+    </style>
+</head>
+<body class="bg-[#f0f2f5]">
+
+    <header class="bg-navy text-white shadow-2xl">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-8">
+                <h1 class="text-3xl font-extrabold tracking-tighter text-white">CRIC<span class="text-accent">MASTER</span></h1>
+                <nav class="hidden md:flex space-x-6 text-sm font-semibold uppercase tracking-wider">
+                    <a href="#" class="hover:text-accent border-b-2 border-transparent hover:border-accent">Live Scores</a>
+                    <a href="#" class="hover:text-accent border-b-2 border-transparent hover:border-accent">Series</a>
+                    <a href="#" class="hover:text-accent border-b-2 border-transparent hover:border-accent">Teams</a>
+                    <a href="#" class="hover:text-accent border-b-2 border-transparent hover:border-accent">News</a>
+                </nav>
+            </div>
+            
+            <div class="flex items-center space-x-5">
+                <div class="relative hidden sm:block">
+                    <input type="text" placeholder="Search matches..." class="search-bar py-1 px-4 text-sm focus:outline-none focus:ring-1 focus:ring-accent w-64">
+                    <i class="fas fa-search absolute right-3 top-2 text-gray-400"></i>
+                </div>
+                <i class="fas fa-search sm:hidden text-xl cursor-pointer"></i> <button class="bg-accent text-navy font-bold px-4 py-1 rounded text-sm uppercase">Login</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-[#052d43] text-gray-300 py-2 border-t border-gray-700">
+        <div class="container mx-auto px-4 flex space-x-6 text-xs font-bold uppercase overflow-x-auto whitespace-nowrap">
+            <a href="#" class="text-white bg-blue-600 px-3 py-1 rounded flex items-center">
+                <i class="fas fa-trophy mr-2"></i> IPL 2026
+            </a>
+            <a href="#" class="hover:text-white flex items-center"><i class="fas fa-globe mr-2"></i> ICC T20 World Cup</a>
+            <a href="#" class="hover:text-white">Champions Trophy</a>
+            <a href="#" class="hover:text-white">Ranji Trophy</a>
+            <a href="#" class="hover:text-white">WPL 2026</a>
+        </div>
+    </div>
+
+    <div class="bg-white border-b overflow-hidden">
+        <div class="container mx-auto flex py-4 space-x-4 overflow-x-auto scrollbar-hide">
+            <div class="min-w-[300px] bg-white border p-3 rounded-lg score-card shadow-sm cursor-pointer">
+                <div class="flex justify-between text-[10px] font-bold text-gray-500 mb-2">
+                    <span>1st TEST • IND vs AUS</span>
+                    <span class="text-red-600 uppercase tracking-tighter">● Live</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-semibold text-gray-800">IND</span>
+                    <span class="font-bold">342/8 (90)</span>
+                </div>
+                <div class="flex justify-between items-center opacity-50">
+                    <span class="font-semibold text-gray-800">AUS</span>
+                    <span class="font-bold">Yet to bat</span>
+                </div>
+                <p class="text-[11px] text-blue-600 mt-2 font-medium">Day 2: Stumps - India leading by 342 runs</p>
+            </div>
+
+            <div class="min-w-[300px] bg-white border p-3 rounded-lg score-card shadow-sm">
+                <div class="flex justify-between text-[10px] font-bold text-gray-500 mb-2">
+                    <span>T20 • IPL 2026</span>
+                    <span>Result</span>
+                </div>
+                <div class="flex justify-between items-center mb-1">
+                    <span class="font-semibold text-gray-800">RCB</span>
+                    <span class="font-bold">210/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="font-semibold text-gray-800">KKR</span>
+                    <span class="font-bold">198/7</span>
+                </div>
+                <p class="text-[11px] text-green-600 mt-2 font-medium">RCB won by 12 runs</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 py-8 grid grid-cols-12 gap-8">
+        
+        <div class="hidden lg:block col-span-2 space-y-4">
+            <h3 class="font-bold text-gray-700 uppercase text-xs tracking-widest">Quick Access</h3>
+            <ul class="text-sm space-y-3 font-medium text-gray-600">
+                <li class="hover:text-blue-600 cursor-pointer"><i class="fas fa-calendar-alt mr-2"></i> Schedules</li>
+                <li class="hover:text-blue-600 cursor-pointer"><i class="fas fa-chart-line mr-2"></i> Rankings</li>
+                <li class="hover:text-blue-600 cursor-pointer"><i class="fas fa-video mr-2"></i> Video Highlights</li>
+                <li class="hover:text-blue-600 cursor-pointer"><i class="fas fa-history mr-2"></i> Archive</li>
+            </ul>
+        </div>
+
+        <div class="col-span-12 lg:col-span-7">
+            <h2 class="text-xl font-bold mb-4 text-gray-800 border-l-4 border-accent pl-3">Top Stories</h2>
+            
+            <div class="bg-white rounded-xl overflow-hidden shadow-md mb-8">
+                <img src="https://images.unsplash.com/photo-1531415074968-036ba1b565da?auto=format&fit=crop&w=800&q=80" alt="cricket" class="w-full h-64 object-cover">
+                <div class="p-6">
+                    <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Match Analysis • 2 Hours Ago</span>
+                    <h2 class="text-2xl font-extrabold mt-2 leading-tight">Can India Retain the Border-Gavaskar Trophy? AI Analyzes Pitch Conditions for the Next Session.</h2>
+                    <p class="text-gray-600 mt-4 leading-relaxed">Our automated analysis indicates a significant shift in the weather pattern which might favor spin bowlers on Day 3...</p>
+                    <button class="mt-6 text-blue-600 font-bold hover:underline">Read Full AI Report →</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="news-container">
+                </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-3 space-y-6">
+            <div class="bg-white p-5 rounded-xl shadow-sm border">
+                <h3 class="font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-bolt text-yellow-500 mr-2"></i> Fast Stats
+                </h3>
+                <div class="space-y-4">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Most Runs (IPL)</span>
+                        <span class="font-bold">Virat Kohli</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-500">Most Wickets</span>
+                        <span class="font-bold">Y. Chahal</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-200 h-[400px] rounded-xl flex items-center justify-center text-gray-400 italic text-center p-4">
+                Recommended Ad Space for AdSense Approval
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="bg-navy text-gray-400 py-12 mt-12 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold text-white mb-4 italic">CRICMASTER AI</h2>
+            <p class="text-sm max-w-md mx-auto">India's first fully automated AI-driven cricket portal providing ball-by-ball analysis and real-time news.</p>
+            <div class="flex justify-center space-x-6 mt-6">
+                <i class="fab fa-twitter text-xl cursor-pointer hover:text-accent"></i>
+                <i class="fab fa-facebook text-xl cursor-pointer hover:text-accent"></i>
+                <i class="fab fa-instagram text-xl cursor-pointer hover:text-accent"></i>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
