@@ -3,150 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CrickMaster Pro | Global Live Cricket & AI Insights</title>
+    <title>CrickMaster Pro | Global Live Scores & AI News</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #002b5b; --secondary: #001e3c; --accent: #ffde00; --live: #d0021b; --text: #333; --light-bg: #f4f7f9; }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Roboto', sans-serif; background-color: var(--light-bg); color: var(--text); line-height: 1.6; }
+        :root { --nav-bg: #002b5b; --sub-nav: #001e3c; --accent: #ffde00; --live: #d0021b; --bg: #f0f2f5; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+        body { background: var(--bg); }
 
-        /* HEADER & NAV */
-        header { background: var(--primary); color: white; padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: sticky; top: 0; z-index: 1000; }
-        .top-nav { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 28px; font-weight: 900; letter-spacing: -1px; }
+        /* HEADER & NAVIGATION */
+        header { background: var(--nav-bg); color: white; padding: 12px 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 26px; font-weight: 900; }
         .logo span { color: var(--accent); }
-        .nav-links { display: flex; list-style: none; gap: 25px; }
-        .nav-links a { color: #fff; text-decoration: none; font-size: 14px; font-weight: 700; text-transform: uppercase; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
+        .nav-menu { display: flex; list-style: none; gap: 20px; }
+        .nav-menu a { color: #fff; text-decoration: none; font-size: 14px; font-weight: bold; text-transform: uppercase; }
 
-        /* TICKER */
-        .live-ticker { background: var(--secondary); color: var(--accent); overflow: hidden; padding: 8px 0; border-bottom: 2px solid var(--accent); font-size: 13px; }
-        .ticker-move { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
-        .ticker-item { padding: 0 40px; font-weight: bold; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        /* LIVE MATCH STRIP */
+        .match-strip { background: var(--sub-nav); overflow: hidden; padding: 10px 0; border-bottom: 3px solid var(--accent); }
+        .ticker { display: flex; animation: scroll 35s linear infinite; white-space: nowrap; }
+        .match-item { padding: 0 30px; color: var(--accent); font-weight: bold; font-size: 13px; border-right: 1px solid #333; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* GLOBAL MATCH CENTER */
-        .match-center { padding: 20px 5%; background: #fff; border-bottom: 1px solid #ddd; }
-        .section-title { font-size: 18px; margin-bottom: 15px; border-left: 4px solid var(--live); padding-left: 10px; }
-        .match-grid { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
-        .match-card { min-width: 280px; background: var(--light-bg); border-radius: 8px; padding: 15px; border: 1px solid #eee; transition: 0.3s; cursor: pointer; }
-        .match-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .m-status { font-size: 11px; font-weight: bold; color: var(--live); margin-bottom: 5px; }
-        .m-team { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 5px; }
-        
-        /* CONTENT AREA */
-        .main-container { display: grid; grid-template-columns: 1fr 350px; gap: 30px; padding: 30px 5%; }
-        .news-hero { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-        .news-img { width: 100%; height: 400px; background: #ddd url('https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80') center/cover; }
-        .news-text { padding: 30px; }
-        .news-text h1 { color: var(--primary); margin-bottom: 15px; font-size: 32px; }
+        /* MAIN LAYOUT */
+        .main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 25px; padding: 25px 5%; }
+
+        /* MATCH CENTER CARDS */
+        .section-header { font-size: 20px; font-weight: 900; margin-bottom: 15px; border-left: 5px solid var(--live); padding-left: 12px; }
+        .match-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); }
+        .team-row { display: flex; justify-content: space-between; font-weight: bold; margin: 8px 0; font-size: 17px; }
+        .m-status { color: var(--live); font-size: 11px; font-weight: 800; margin-bottom: 10px; }
+
+        /* NEWS HERO */
+        .news-hero { background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        .news-img { height: 350px; background: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1000&q=80') center/cover; }
+        .news-content { padding: 25px; }
+        .news-content h1 { font-size: 30px; color: var(--nav-bg); margin-bottom: 15px; }
 
         /* FOOTER */
-        footer { background: var(--secondary); color: #aaa; padding: 50px 5%; margin-top: 50px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
-        .footer-logo { color: white; font-size: 24px; font-weight: bold; margin-bottom: 20px; }
-        .social-icons { display: flex; gap: 15px; margin-top: 20px; }
-        .social-icons i { font-size: 20px; color: white; cursor: pointer; }
+        footer { background: var(--sub-nav); color: #888; padding: 40px 5%; margin-top: 50px; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; color: white; list-style: none; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="top-nav">
+        <div class="nav-container">
             <div class="logo">CRICK<span>MASTER</span></div>
-            <ul class="nav-links">
+            <ul class="nav-menu">
                 <li><a href="#">Matches</a></li>
+                <li><a href="#">Series</a></li>
                 <li><a href="#">Teams</a></li>
-                <li><a href="#">News</a></li>
-                <li><a href="#">Rankings</a></li>
                 <li><a href="#">Videos</a></li>
             </ul>
-            <div class="search-btn"><i class="fas fa-search"></i></div>
+            <div class="user-icon"><i class="fas fa-user-circle fa-lg"></i></div>
         </div>
     </header>
 
-    <div class="live-ticker">
-        <div class="ticker-move" id="global-ticker">
-            <span class="ticker-item">● IND vs NZ 4th T20I: India needs 32 from 12 balls</span>
-            <span class="ticker-item">● AUS vs SA: Day 1 Tea - AUS 142/3</span>
-            <span class="ticker-item">● BBL: Sydney Sixers vs Perth Scorchers starts soon</span>
+    <div class="match-strip">
+        <div class="ticker" id="ticker-data">
+            <span class="match-item">🔴 LIVE: IND vs NZ 4th T20I - NZ 215/7 (20)</span>
+            <span class="match-item">🏏 UPCOMING: AUS vs SA 2nd Test - Sydney</span>
+            <span class="match-item">🔥 BBL: Scorchers vs Heat - Match Starts in 2h</span>
+            <span class="match-item">⭐ IPL 2026: Auction Dates Announced for Dec 15</span>
         </div>
     </div>
 
-    <section class="match-center">
-        <h2 class="section-title">GLOBAL MATCH CENTER</h2>
-        <div class="match-grid" id="match-grid">
-            <div class="match-card">
-                <div class="m-status">● LIVE</div>
-                <div class="m-team"><span>IND</span> <span>184/8</span></div>
-                <div class="m-team"><span>NZ</span> <span>215/7</span></div>
-                <div style="font-size: 11px; color: #777;">IND needs 32 runs in 12 balls</div>
-            </div>
-            <div class="match-card">
-                <div class="m-status" style="color: #002b5b;">UPCOMING</div>
-                <div class="m-team"><span>AUS</span> <span>-</span></div>
-                <div class="m-team"><span>SA</span> <span>-</span></div>
-                <div style="font-size: 11px; color: #777;">Today, 11:30 PM</div>
-            </div>
-            <div class="match-card">
-                <div class="m-status" style="color: #444;">RESULT</div>
-                <div class="m-team"><span>WI</span> <span>164/5</span></div>
-                <div class="m-team"><span>ENG</span> <span>162/9</span></div>
-                <div style="font-size: 11px; color: #4CAF50;">West Indies won by 5 wickets</div>
-            </div>
-        </div>
-    </section>
-
-    <div class="main-container">
+    <div class="main-grid">
         <main>
-            <article class="news-hero">
-                <div class="news-img"></div>
-                <div class="news-text">
-                    <span style="color:var(--live); font-weight:bold; font-size:12px;">AI FEATURED ANALYSIS</span>
-                    <h1 id="ai-news-title">Can India Retain the Border-Gavaskar Trophy?</h1>
-                    <p id="ai-news-content">Automated insights are being fetched from world cricket news...</p>
+            <h2 class="section-header">FEATURED MATCHES</h2>
+            <div class="match-cards" id="match-cards-container">
+                <div class="card">
+                    <div class="m-status">● LIVE • 4th T20I</div>
+                    <div class="team-row"><span>🇮🇳 IND</span> <span>162/8 (17.1)</span></div>
+                    <div class="team-row"><span>🇳🇿 NZ</span> <span>215/7 (20)</span></div>
+                    <p style="font-size: 12px; color: #666; margin-top:10px;">India needs 54 runs in 17 balls</p>
                 </div>
-            </article>
+            </div>
+
+            <div class="news-hero">
+                <div class="news-img"></div>
+                <div class="news-content">
+                    <span style="color:var(--live); font-weight:bold; font-size:12px;">AI EDITORIAL</span>
+                    <h1 id="hero-title">Cricket 2026: The Year of the Speedster?</h1>
+                    <p id="hero-desc">With the T20 World Cup approaching, we analyze how pace bowlers are dominating the powerplays...</p>
+                </div>
+            </div>
         </main>
 
         <aside>
-            <div style="background:white; padding:20px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.05);">
-                <h3 style="margin-bottom:15px; border-bottom:2px solid var(--accent); padding-bottom:5px;">ICC T20 RANKINGS</h3>
-                <table style="width:100%; font-size:14px; border-collapse: collapse;">
-                    <tr><td style="padding:8px 0;">1. India</td><td align="right">268</td></tr>
-                    <tr><td style="padding:8px 0;">2. England</td><td align="right">259</td></tr>
-                    <tr><td style="padding:8px 0;">3. Australia</td><td align="right">255</td></tr>
+            <div style="background:white; padding:20px; border-radius:12px;">
+                <h3 style="margin-bottom:15px; border-bottom:2px solid var(--accent);">ICC RANKINGS</h3>
+                <table style="width:100%; border-collapse: collapse; font-size: 14px;">
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding:10px 0;">1. India</td><td align="right">268</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding:10px 0;">2. England</td><td align="right">259</td></tr>
+                    <tr style="border-bottom: 1px solid #eee;"><td style="padding:10px 0;">3. Australia</td><td align="right">255</td></tr>
                 </table>
             </div>
         </aside>
     </div>
 
     <footer>
-        <div class="footer-grid">
-            <div>
-                <div class="footer-logo">CRICK<span>MASTER</span></div>
-                <p>The world's most advanced AI-powered cricket portal delivering real-time insights since 2026.</p>
-                <div class="social-icons">
-                    <i class="fab fa-facebook"></i><i class="fab fa-twitter"></i><i class="fab fa-instagram"></i>
-                </div>
-            </div>
-            <div>
-                <h4>Explore</h4>
-                <ul style="list-style:none; margin-top:15px; line-height:2;">
-                    <li>Live Scores</li><li>Archives</li><li>Player Stats</li><li>Fantasy Tips</li>
-                </ul>
-            </div>
-            <div>
-                <h4>Support</h4>
-                <ul style="list-style:none; margin-top:15px; line-height:2;">
-                    <li>Contact Us</li><li>Privacy Policy</li><li>Terms of Service</li>
-                </ul>
-            </div>
-        </div>
-        <div style="text-align:center; margin-top:40px; font-size:12px; border-top:1px solid #333; padding-top:20px;">
-            © 2026 CrickMaster Pro. Powered by Gemini Flash 3.0
-        </div>
+        <ul class="footer-links">
+            <li>About</li><li>Contact</li><li>Privacy</li><li>Terms</li>
+        </ul>
+        <p>© 2026 CrickMaster Pro - The AI Cricket Network</p>
     </footer>
 
+    <script>
+        // In a real pro site, you fetch data from an API here.
+        // For now, this script simulates the "Live" feeling every 5 seconds.
+        async function fetchGlobalScores() {
+            // Replace this with your API call later:
+            // const res = await fetch('https://api.cricapi.com/v1/currentMatches?apikey=YOUR_KEY');
+            console.log("Fetching global cricket data...");
+        }
+        setInterval(fetchGlobalScores, 5000);
+    </script>
 </body>
 </html>
