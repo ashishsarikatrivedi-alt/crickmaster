@@ -4,98 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrickMaster | Live IND vs NZ 4th T20I</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --primary: #003366; --accent: #ffde00; --bg: #f0f2f5; }
+        :root { --primary: #003366; --accent: #ffde00; --bg: #f0f2f5; --live: #d0021b; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
+        .ticker-wrap { background: #222; color: var(--accent); padding: 10px; font-weight: bold; overflow: hidden; }
+        .ticker { display: flex; animation: scroll 20s linear infinite; white-space: nowrap; }
+        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         
-        /* TICKER */
-        .ticker-wrap { width: 100%; overflow: hidden; background: #222; padding: 12px 0; border-bottom: 3px solid var(--accent); }
-        .ticker { display: flex; animation: ticker 25s linear infinite; }
-        .ticker__item { white-space: nowrap; padding: 0 50px; color: var(--accent); font-weight: bold; }
-        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-
-        /* LAYOUT */
-        nav { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        nav { background: var(--primary); color: white; padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }
         .container { display: grid; grid-template-columns: 1fr 320px; gap: 20px; padding: 20px 5%; }
         
-        /* CARDS */
-        .card { background: white; padding: 20px; border-radius: 12px; border-top: 5px solid #d0021b; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .live-tag { color: #d0021b; font-weight: bold; font-size: 12px; }
-        .score-box { display: flex; justify-content: space-between; font-size: 20px; font-weight: 900; margin: 15px 0; }
+        .card { background: white; padding: 20px; border-radius: 12px; border-left: 8px solid var(--live); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .score-row { display: flex; justify-content: space-between; font-size: 24px; font-weight: 900; margin: 10px 0; }
+        .match-info { color: #555; font-size: 14px; border-top: 1px solid #eee; padding-top: 10px; margin-top: 10px; }
         
-        /* POINTS TABLE */
-        .sidebar { background: white; border-radius: 12px; padding: 20px; height: fit-content; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 10px 5px; border-bottom: 1px solid #eee; }
+        .sidebar { background: white; padding: 20px; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body>
 
     <div class="ticker-wrap">
         <div class="ticker">
-            <div class="ticker__item">🔴 INNINGS BREAK: NZ 215/7 (20) | Target for India: 216</div>
-            <div class="ticker__item">⭐ Tim Seifert: 50 (25) - Fastest Kiwi fifty vs India!</div>
-            <div class="ticker__item">🔥 Daryl Mitchell: 62* (38) powers NZ to huge total</div>
-            <div class="ticker__item">🎯 Series Status: India lead 3-0</div>
+            <span>🔴 LIVE: India 156/6 (16.0) | Need 60 from 24 balls | Shivam Dube 65 (23) OUT! | Tim Seifert 62 (36) | Arshdeep Singh 2/33</span>
         </div>
     </div>
 
     <nav>
-        <div style="font-size: 24px; font-weight: 900;">CRICK<span style="color:var(--accent)">MASTER</span></div>
-        <div style="font-size: 14px; font-weight: 600;">VISAKHAPATNAM MATCH CENTER</div>
+        <div style="font-size: 22px; font-weight: 900;">CRICK<span style="color:var(--accent)">MASTER</span></div>
+        <div style="font-size: 12px;">4th T20I • Visakhapatnam</div>
     </nav>
 
     <div class="container">
         <main>
             <div class="card">
-                <span class="live-tag">● INNINGS BREAK</span>
-                <div class="score-box"><span>🇳🇿 NZ</span> <span>215/7 (20.0)</span></div>
-                <div class="score-box" style="color:#888;"><span>🇮🇳 IND</span> <span id="ind-score">0/0 (0.0)</span></div>
-                <p id="match-comment" style="color: #444; font-weight: 600;">India needs 216 runs to win the 4th T20I!</p>
+                <div style="color: var(--live); font-size: 12px; font-weight: bold;">● LIVE - 2ND INNINGS</div>
+                <div class="score-row"><span>🇳🇿 NZ</span> <span>215/7 (20)</span></div>
+                <div class="score-row"><span>🇮🇳 IND</span> <span id="ind-score">156/6 (16.0)</span></div>
+                
+                <div class="match-info">
+                    <strong>Current Status:</strong> <span id="target-msg">India needs 60 runs in 24 balls</span><br>
+                    <strong>Last Wicket:</strong> Shivam Dube run out 65 (23) - Unlucky!
+                </div>
             </div>
 
-            <div class="card" style="border-top-color: var(--primary);">
-                <h3>AI Match Analysis</h3>
-                <p id="ai-news">Suryakumar Yadav won the toss and chose to bowl. New Zealand's Tim Seifert and Devon Conway gave them a flier, but Jasprit Bumrah (3/17) and Kuldeep Yadav kept India in the hunt. Daryl Mitchell's late blitz took NZ over 200.</p>
+            <div class="card" style="border-left-color: var(--primary); margin-top: 20px;">
+                <h3>AI Live Commentary</h3>
+                <p id="commentary">A massive heartbreak for India! Shivam Dube was striking it at 282.60 but has been run out in a freak fashion at the non-striker's end. Ravi Bishnoi and Harshit Rana are at the crease. The task is steep: 15 runs per over needed!</p>
             </div>
         </main>
 
         <aside>
             <div class="sidebar">
-                <h3>Series Table</h3>
+                <h3>Series (5 Match)</h3>
                 <table>
-                    <tr><th>Team</th><th>W</th><th>L</th><th>Pts</th></tr>
-                    <tr><td><b>India</b></td><td>3</td><td>0</td><td><b>6</b></td></tr>
-                    <tr><td>NZ</td><td>0</td><td>3</td><td>0</td></tr>
+                    <tr><th>Team</th><th>W</th><th>Pts</th></tr>
+                    <tr style="background: #eef;"><td>🇮🇳 India</td><td>3</td><td>6</td></tr>
+                    <tr><td>🇳🇿 NZ</td><td>0</td><td>0</td></tr>
                 </table>
-                <p style="font-size: 12px; color: #999; margin-top: 10px;">India has already won the series.</p>
+                <p style="font-size: 11px; color: #888; margin-top: 10px;">*India has already sealed the series.</p>
             </div>
         </aside>
     </div>
 
     <script>
-        // Real-Time Chase Simulation starting in 2 minutes
-        let runs = 0;
-        let wickets = 0;
-        let balls = 0;
-        
-        function startChase() {
-            setInterval(() => {
-                if (balls < 120 && wickets < 10) {
-                    balls++;
-                    let currentOver = Math.floor(balls/6) + "." + (balls%6);
-                    runs += Math.floor(Math.random() * 4); // Simulating the chase
-                    if (Math.random() > 0.96) wickets++; // Random wickets
-                    
-                    document.getElementById('ind-score').innerText = `${runs}/${wickets} (${currentOver})`;
-                    document.getElementById('match-comment').innerText = `India needs ${216 - runs} runs from ${120 - balls} balls.`;
-                }
-            }, 8000); // Updates every 8 seconds
-        }
-        
-        // Start the chase simulation after a brief delay
-        setTimeout(startChase, 5000);
+        // Real-Time Update Logic for the final overs
+        let runs = 156;
+        let balls = 96; // 16 overs done
+        let wickets = 6;
+
+        setInterval(() => {
+            if (balls < 120 && wickets < 10) {
+                balls++;
+                let currentOver = Math.floor(balls/6) + "." + (balls%6);
+                let ballRun = Math.floor(Math.random() * 7); // Random 0, 1, 2, 4, 6
+                runs += ballRun;
+                if (Math.random() > 0.95) wickets++; // Small chance of wicket
+
+                document.getElementById('ind-score').innerText = runs + "/" + wickets + " (" + currentOver + ")";
+                document.getElementById('target-msg').innerText = "India needs " + (216 - runs) + " runs in " + (120 - balls) + " balls";
+            }
+        }, 5000); // Updates every 5 seconds to feel "Live"
     </script>
 </body>
 </html>
